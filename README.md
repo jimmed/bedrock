@@ -35,14 +35,14 @@
        - [ ] Integrity check
      - [ ] Modpack update
    - [ ] Server instance management
-     - [ ] PM2 integration
+     - [x] PM2 integration
        - [ ] Install startup scripts
-       - [ ] Launch/shutdown/list processes
+       - [x] Launch/shutdown/list processes
      - [ ] Manage server config
-      - [ ] Vanilla server.properties
+      - [x] Vanilla server.properties
       - [ ] Ops/whitelist/ban management
       - [ ] FTB utilities
-     - [ ] Launch server
+     - [x] Launch server
      - [ ] Stop server gracefully
      - [ ] RCON support
      - [ ] Server ping support
