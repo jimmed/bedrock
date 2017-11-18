@@ -1,33 +1,34 @@
-const config = require('config')
-const chalk = require('chalk')
-const Table = require('cli-table')
-const { command } = require('../utils')
+const config = require("config");
+const chalk = require("chalk");
+const Table = require("cli-table");
+const { command } = require("../utils");
 const {
   listInstances,
   disconnectFromDaemon
-} = require('../../lib/minecraft/api/instance/process')
+} = require("../../lib/minecraft/api/instance/process");
 
-exports.command = 'list'
-exports.aliases = ['$0']
-exports.describe = 'list of available instances'
+exports.command = "list";
+exports.aliases = ["$0"];
+exports.describe = "list of available instances";
 
+// TODO: List via directory then merge pm2 instance data
 exports.handler = command(async argv => {
-  const instances = await listInstances()
+  const instances = await listInstances();
   if (!instances.length) {
-    console.log(chalk.white.bold('No instances installed!\n'))
+    console.log(chalk.white.bold("No instances installed!\n"));
     console.log(
       chalk.white.bold(
-        'Get an instance up and running using the following command:\n'
+        "Get an instance up and running using the following command:\n"
       )
-    )
+    );
     console.log(
-      chalk.blue.bold('  $'),
-      chalk.white(config.meta.name, 'install\n')
-    )
+      chalk.blue.bold("  $"),
+      chalk.white(config.meta.name, "install\n")
+    );
   } else {
     const table = new Table({
-      head: ['Name', 'Type', 'Version', 'Status']
-    })
+      head: ["Name", "Type", "Version", "Status"]
+    });
     table.push(
       ...instances.map(({ name, pm2_env: { status }, config }) => [
         name,
@@ -35,22 +36,22 @@ exports.handler = command(async argv => {
         makeVersionString(config),
         status
       ])
-    )
-    console.log(table.toString())
+    );
+    console.log(table.toString());
   }
 
-  await disconnectFromDaemon()
-})
+  await disconnectFromDaemon();
+});
 
 const makeVersionString = ({ type, forge, minecraft, modpack }) => {
   switch (type) {
-    case 'Vanilla':
-      return `${minecraft.version}`
-    case 'Forge':
-      return `${minecraft.version} (Forge ${forge.version})`
-    case 'CurseForge':
-      return `${modpack.name} (${modpack.version})`
+    case "Vanilla":
+      return `${minecraft.version}`;
+    case "Forge":
+      return `${minecraft.version} (Forge ${forge.version})`;
+    case "CurseForge":
+      return `${modpack.name} (${modpack.version})`;
     default:
-      return '-'
+      return "-";
   }
-}
+};
